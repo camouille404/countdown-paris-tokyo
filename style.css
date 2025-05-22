@@ -1,0 +1,61 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  overflow: hidden;
+  background: url('images/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+  height: 100vh;
+}
+
+#boy {
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+  width: 80px;
+}
+
+#plane {
+  position: absolute;
+  top: 100px;
+  left: 10%;
+  width: 100px;
+  transition: left 1s ease-in-out;
+}
+
+#hearts {
+  position: absolute;
+  bottom: 150px;
+  left: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.heart {
+  width: 30px;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+}
+
+#countdown {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: white;
+  font-size: 24px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px 20px;
+  border-radius: 10px;
+}
