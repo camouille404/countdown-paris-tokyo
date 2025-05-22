@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Countdown to Reunion</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to top, #ffdce0 0%, #ffffff 100%);
+      overflow: hidden;
+    }
+    #scene {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('images/background.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    #countdown {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      color: #e91e63;
+      font-weight: bold;
+    }
+    .character {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    #boy {
+      bottom: 100px;
+      left: 60px;
+      background-image: url('images/boy.png');
+    }
+    #plane {
+      top: 150px;
+      left: 100px;
+      background-image: url('images/plane.png');
+      transition: left 1s linear;
+    }
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-image: url('images/heart.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: float 4s ease-in infinite;
+      opacity: 0.7;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-80px) scale(1.3); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="scene">
+    <div id="countdown"></div>
+    <div id="boy" class="character"></div>
+    <div id="plane" class="character"></div>
+  </div>
+
+  <script>
+    const targetDate = new Date("2025-08-16T00:00:00");
+    const countdownEl = document.getElementById("countdown");
+    const plane = document.getElementById("plane");
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff < 0) {
+        countdownEl.textContent = "She’s here!";
+        return;
+      }
+
+      const daysLeft = Math.floor(diff / (1000 * 60 * 60 * 24));
+      countdownEl.textContent = `${daysLeft} day${daysLeft !== 1 ? 's' : ''} until reunion`;
+
+      const maxLeft = window.innerWidth * 0.75;
+      const totalDays = Math.floor((targetDate - new Date("2024-08-16T00:00:00")) / (1000 * 60 * 60 * 24));
+      const progress = 1 - daysLeft / totalDays;
+      plane.style.left = `${100 + progress * (maxLeft - 100)}px`;
+    }
+
+    function createHeart(x, y) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = `${x + Math.random() * 40}px`;
+      heart.style.top = `${y - 20}px`;
+      heart.style.animationDuration = `${3 + Math.random()}s`;
+      document.getElementById("scene").appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }
+
+    function spawnHearts() {
+      const now = new Date();
+      const weeksLeft = Math.floor((targetDate - now) / (1000 * 60 * 60 * 24 * 7));
+      const heartsPerSecond = 6 - weeksLeft;
+      const clamped = Math.max(1, heartsPerSecond);
+
+      for (let i = 0; i < clamped; i++) {
+        createHeart(80, window.innerHeight - 120);
+        createHeart(parseFloat(plane.style.left), 170);
+      }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000 * 60 * 10);
+    setInterval(spawnHearts, 2000);
+  </script>
+</body>
+</html>
