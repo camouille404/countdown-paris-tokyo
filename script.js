@@ -12,7 +12,7 @@ function updateCountdown() {
   }
 
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  document.getElementById("countdown").textContent = `J - ${days}`;
+  document.getElementById("countdown").textContent = `J - ${days} avant nos retrouvailles`;
 }
 
 // ANIMATION AVION : se rapproche chaque semaine
